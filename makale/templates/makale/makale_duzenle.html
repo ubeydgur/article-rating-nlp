@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Makale Düzenle</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/makale_detay.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>✏️ Makale Düzenle</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">💾 Kaydet</button>
+        </form>
+        <a href="{% url 'makale_sorgu_detay' %}?sorgu_no={{ makale.takip_numarasi }}">🔙 Geri Dön</a>
+    </div>
+</body>
+</html>

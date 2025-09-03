@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Makale Değerlendirme</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/hakem_panel.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>📝 Makale Değerlendirme</h1>
+    <h2>{{ makale.baslik }}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="yorum">Yorumunuz:</label><br>
+        <textarea name="yorum" id="yorum" rows="5" cols="60" required></textarea><br><br>
+
+        <label for="pdf_dosya">İsteğe bağlı değerlendirme PDF:</label><br>
+        <input type="file" name="pdf_dosya" accept=".pdf"><br><br>
+
+        <button type="submit">💾 Kaydet</button>
+    </form>
+
+    <br>
+    <a href="{% url 'hakem_paneli' %}">⬅️ Panele Dön</a>
+</div>
+</body>
+</html>

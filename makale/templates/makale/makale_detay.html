@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Makale Detayı</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/makale_detay.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>📄 {{ makale.baslik }}</h1>
+
+        <p><strong>Takip Numarası:</strong> {{ makale.takip_numarasi }}</p>
+        <p><strong>Yazar E-Postası:</strong> {{ makale.yazar_email }}</p>
+        <p><strong>Yüklenme Tarihi:</strong> {{ makale.yuklenme_tarihi }}</p>
+        <p><strong>Durum:</strong> {{ makale.durum }}</p>
+        <p><strong>Anahtar Kelimeler:</strong> {{ makale.anahtar_kelimeler }}</p>
+        <p><strong>Alanlar:</strong>
+            {% for alan in makale.alanlar.all %}
+                {{ alan }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Belirlenmemiş
+            {% endfor %}
+        </p>
+
+        <h3>📎 Orijinal Makale:</h3>
+        <embed src="{{ makale.pdf_dosya.url }}" width="100%" height="600px" type="application/pdf" />
+        <p><a href="{{ makale.pdf_dosya.url }}" target="_blank">📥 Yeni sekmede aç</a></p>
+
+        <h3>✏️ Anonimleştirilecek Bilgi Türlerini Seçin:</h3>
+        <form method="post" action="{% url 'anonimlestir' makale.id %}">
+            {% csrf_token %}
+            <label><input type="checkbox" name="bilgi_turleri" value="PERSON"> Yazar Ad-Soyadı</label><br>
+            <label><input type="checkbox" name="bilgi_turleri" value="ORG"> Kurum Bilgisi</label><br>
+            <label><input type="checkbox" name="bilgi_turleri" value="EMAIL"> E-Posta Adresi</label><br>
+            <label><input type="checkbox" name="bilgi_turleri" value="IMAGE"> Vesikalık (Görsel)</label><br><br>
+            <button type="submit">🧼 Seçilen Bilgileri Anonimleştir</button>
+        </form>
+
+        {% if anonim_makale %}
+            <h3>🔒 Anonimleştirilmiş Makale:</h3>
+            <iframe src="{{ anonim_makale.anonim_makale_pdf.url }}" width="100%" height="600px" frameborder="0" class="pdf-frame"></iframe>
+            <p><a href="{{ anonim_makale.anonim_makale_pdf.url }}" target="_blank">📥 Yeni sekmede aç</a></p>
+        {% endif %}
+
+        <h3>👤 Atanan Hakem:</h3>
+        {% if hakem_atama %}
+            <p><strong>İsim:</strong> {{ hakem_atama.hakem.kullanici.username }}</p>
+            <p><strong>Atama Tarihi:</strong> {{ hakem_atama.atama_tarihi }}</p>
+        {% else %}
+            <p><em>Henüz bir hakem atanmamış.</em></p>
+        {% endif %}
+
+        <h3>⚙️ İşlemler:</h3>
+        {% if uygun_hakemler %}
+            <form method="POST" action="{% url 'hakem_ata' makale.id %}">
+                {% csrf_token %}
+                <label for="hakem_id">Uygun Hakem Seç:</label>
+                <select name="hakem_id" id="hakem_id">
+                    {% for hakem in uygun_hakemler %}
+                        <option value="{{ hakem.id }}">{{ hakem.kullanici.username }} ({{ hakem.kullanici.email }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Atama Yap</button>
+            </form>
+        {% else %}
+            <p>🔍 Bu makale için uygun hakem bulunamadı.</p>
+        {% endif %}
+
+        {% if degerlendirme %}
+        <h3>📝 Hakem Değerlendirmesi:</h3>
+        <p><strong>Yorum:</strong> {{ degerlendirme.yorum }}</p>
+            {% if degerlendirme.pdf_dosya %}
+                <p><a href="{{ degerlendirme.pdf_dosya.url }}" target="_blank">📄 PDF Ekini Görüntüle</a></p>
+            {% endif %}
+        <br>
+        <a href="{% url 'makale_sonucu_olustur' makale.id %}" class="btn btn-generate">📤 Sonuç PDF Oluştur</a>
+        
+        {% if makale.sonuc_pdf %}
+            <h3>📬 Oluşturulan Sonuç PDF:</h3>
+            <p><a href="{{ makale.sonuc_pdf.url }}" target="_blank">📄 Sonuç PDF'ini Görüntüle</a></p>
+        {% endif %}
+
+        {% else %}
+            <p>🔍 Henüz değerlendirme eklenmemiş.</p>
+        {% endif %}
+    
+        <h3>📌 Durum Güncelle:</h3>
+        <a href="{% url 'makale_durum_guncelle' makale.id %}?durum=Beklemede">Beklemede</a> |
+        <a href="{% url 'makale_durum_guncelle' makale.id %}?durum=Değerlendiriliyor">Değerlendiriliyor</a> |
+        <a href="{% url 'makale_durum_guncelle' makale.id %}?durum=Tamamlandı">Tamamlandı</a>
+
+        <br><br>
+        <a href="{% url 'editor_paneli' %}">⬅️ Editör Paneline Dön</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Akademik Makale Değerlendirme Sistemi</h1>
+        <p>Sisteme makale yükleyebilir, değerlendirme sürecini takip edebilir ve sonuçları alabilirsiniz.</p>
+        
+        <a href="{% url 'makale_yukle' %}" class="btn btn-upload">📂 Makale Yükle</a>
+        <a href="{% url 'makale_sorgula' %}" class="btn btn-status">🔍 Makale Durumu Sorgula</a>
+        <a href="{% url 'editor_paneli' %}" class="btn btn-editor">🛠️ Editör Paneli</a>
+        <a href="{% url 'hakem_paneli' %}" class="btn btn-reviewer">🧑‍⚖️ Hakem Paneli</a>
+    </div>
+</body>
+</html>

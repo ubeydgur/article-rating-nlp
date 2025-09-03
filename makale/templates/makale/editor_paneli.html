@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Editör Paneli</title>
+    <link rel="stylesheet" href="{% static 'css/editor.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🧑‍💼 Editör Paneli</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Başlık</th>
+                    <th>Takip No</th>
+                    <th>Yazar E-Posta</th>
+                    <th>Durum</th>
+                    <th>Hakem</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for makale in makaleler %}
+                <tr>
+                    <td>{{ makale.baslik }}</td>
+                    <td>{{ makale.takip_numarasi }}</td>
+                    <td>{{ makale.yazar_email }}</td>
+                    <td>{{ makale.durum }}</td>
+                    <td>
+                        {% with makale.hakematama_set.first as atama %}
+                            {% if atama %}
+                                {{ atama.hakem.kullanici.username }}
+                            {% else %}
+                                ❌ Atanmamış
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        <a href="{% url 'makale_detay' makale.id %}">🔍 Detay</a> |
+                        <a href="{% url 'anonimlestir' makale.id %}">🧩 Anonimleştir</a> |
+                        <a href="{% url 'hakem_ata' makale.id %}">👨‍⚖️ Hakem Ata</a> |
+                        <a href="{% url 'editor_makale_mesajlar' makale.id %}">📩 Yazara Mesaj</a> |
+                        <a href="{% url 'makale_durum_guncelle' makale.id %}?durum=Tamamlandı">✅ Tamamlandı</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

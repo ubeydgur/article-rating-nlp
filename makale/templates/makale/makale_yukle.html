@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makale Yükleme</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/makale_yukle.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>📄 Makale Yükleme Formu</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="baslik">Makale Başlığı:</label>
+            <input type="text" name="baslik" required>
+
+            <label for="yazar_email">Yazar E-mail:</label>
+            <input type="email" name="yazar_email" required>
+
+            <label for="pdf_dosya">📂 PDF Dosyanızı Yükleyin:</label>
+            <input type="file" name="pdf_dosya" accept=".pdf" required>
+
+            <button type="submit">📤 Makale Yükle</button>
+        </form>
+    </div>
+    {% if form.errors %}
+    <ul class="form-errors">
+        {% for field, errors in form.errors.items %}
+            <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

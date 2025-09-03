@@ -1,0 +1,8 @@
+{% block content %}
+<h2>🧑‍⚖️ Yeni Hakem Oluştur</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Kaydet</button>
+</form>
+{% endblock %}

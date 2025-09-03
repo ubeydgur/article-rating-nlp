@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hakem Paneli</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hakem_panel.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🧑‍⚖️ Hakem Paneli</h1>
+
+        {% if atamalar %}
+            {% for atama in atamalar %}
+                <div class="card">
+                    <h3>{{ atama.makale.baslik }}</h3>
+                    <p><strong>Takip No:</strong> {{ atama.makale.takip_numarasi }}</p>
+
+                    {% if atama.makale.anonim_makale %}
+                        <div class="pdf-actions">
+                            <a href="{{ atama.makale.anonim_makale.anonim_makale_pdf.url }}" target="_blank" class="btn btn-view">📥 PDF İndir</a>
+                        </div>
+                        <div class="pdf-preview">
+                            <iframe src="{{ atama.anonim_pdf.anonim_makale_pdf.url }}" width="100%" height="500px" frameborder="0"></iframe>
+                        </div>
+                    {% else %}
+                        <p style="color: red;">❗ Bu makalenin anonimleştirilmiş versiyonu bulunamadı.</p>
+                    {% endif %}
+
+                    <br>
+                    <a href="{% url 'degerlendirme_ekle' atama.makale.id %}" class="btn btn-review">📝 Değerlendirme Yap</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>📭 Henüz size atanmış bir makale bulunmamaktadır.</p>
+        {% endif %}
+
+        <br>
+        <a href="{% url 'index' %}" class="btn btn-back">⬅ Ana Sayfa</a>
+    </div>
+</body>
+</html>

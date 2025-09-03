@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makale Mesajları</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 16px;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .message-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .message img {
+            width: 40px; /* Profil resmi boyutu */
+            height: 40px;
+            border-radius: 50%; /* Yuvarlak profil resmi */
+            margin-right: 10px;
+        }
+        .message-text {
+            padding: 10px;
+            max-width: 50px; /* Genişliği artırdım */
+            border-radius: 8px;
+            max-width: 70%;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .user-message {
+            justify-content: flex-end;
+        }
+        .user-message .message-text {
+            background-color: #007bff; /* Kullanıcının mesaj rengi */
+            color: white;
+            margin-left: auto; /* Kullanıcının mesajı sağda */
+        }
+        .other-message .message-text {
+            background-color: #f8f9fa; /* Diğer kullanıcıların mesaj rengi */
+            color: black;
+        }
+        .profile-image {
+            width: 30px; /* Profil resmi boyutu */
+            height: 30px;
+            border-radius: 50%; /* Yuvarlak profil resmi */
+            margin-right: 10px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h3>{{ makale.baslik }} - Mesajlar</h3>
+
+{% if rol == "yazar" %}
+    <p><strong>Şu an "Yazar" olarak mesaj gönderiyorsunuz.</strong></p>
+{% elif rol == "editor" %}
+    <p><strong>Şu an "Editör" olarak mesaj gönderiyorsunuz.</strong></p>
+{% endif %}
+
+<div id="messagesContent">
+    {% for mesaj in mesajlar %}
+        <div class="message-container {% if mesaj.gonderen == makale.yazar %}yazar-message{% else %}editor-message{% endif %}">
+            <div class="message">
+                <div class="message-text">
+                    <strong>{{ mesaj.kimden }}:</strong> {{ mesaj.icerik }}
+                    <p><small>{{ mesaj.tarih }}</small></p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Henüz mesaj bulunmamaktadır.</p>
+    {% endfor %}
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="content">Mesajınızı Yazın:</label>
+    <textarea id="content" name="icerik" rows="4" required></textarea>
+    <button type="submit">Gönder</button>
+</form>
+
+

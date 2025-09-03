@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makale Sorgulama</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/makale_detay.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>🔍 Makale Sorgulama</h2>
+        <form action="{% url 'makale_sorgu_detay' %}" method="get">
+            <label for="sorgu_no">Makale Sorgu No:</label>
+            <input type="text" name="sorgu_no" required>
+
+            <button type="submit">📄 Makaleyi Görüntüle</button>
+        </form>
+    </div>
+</body>
+</html>

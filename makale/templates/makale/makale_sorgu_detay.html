@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Makale Sorgu Detay</title>
+    <link rel="stylesheet" href="{% static 'css/editor.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Makale Detayları</h1>
+
+        {% if makale %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Başlık</th>
+                    <th>Takip No</th>
+                    <th>Yazar E-Posta</th>
+                    <th>Durum</th>
+                    <th>Hakem</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ makale.baslik }}</td>
+                    <td>{{ makale.takip_numarasi }}</td>
+                    <td>{{ makale.yazar_email }}</td>
+                    <td>{{ makale.durum }}</td>
+                    <td>
+                        {% with makale.hakematama_set.first as atama %}
+                            {% if atama %}
+                                {{ atama.hakem.kullanici.username }}
+                            {% else %}
+                                ❌ Atanmamış
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        <a href="{% url 'makale_duzenle' makale.id %}">✏️ Düzenle</a> |
+                        <a href="{% url 'makale_mesajlar' makale.id %}">📩 Editöre Mesaj</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+            <p>⚠️ Bu takip numarasıyla eşleşen bir makale bulunamadı.</p>
+        {% endif %}
+
+        {% if makale.durum == 'Tamamlandı' and makale.sonuc_pdf %}
+            <h3>✅ Değerlendirme Sonucu:</h3>
+            <p>Makalenizin değerlendirme sonucu aşağıdaki bağlantıdan indirilebilir:</p>
+            <p><a href="{{ makale.sonuc_pdf.url }}" target="_blank">📄 Sonuç PDF'ini Görüntüle</a></p>
+        {% endif %}
+
+    </div>
+</body>
+</html>

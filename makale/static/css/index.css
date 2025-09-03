@@ -1,0 +1,95 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    color: #343a40;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    background: #28a745;
+}
+
+.btn-upload:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.btn-status {
+    background: #007bff;
+}
+
+.btn-status:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-editor {
+    background-color: #6f42c1;
+}
+
+.btn-editor:hover {
+    background-color: #5936a4;
+    transform: scale(1.05);
+}
+
+.btn-reviewer {
+    background-color: #ffc107;
+    
+}
+
+.btn-reviewer:hover {
+    background-color: #e8590c;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+}

@@ -1,0 +1,82 @@
+/* Sayfa genel stil */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Giriş kutusu */
+.container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+/* Başlık */
+h2 {
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+/* Label */
+label {
+    font-size: 16px;
+    color: #495057;
+}
+
+/* Dropdown kutusu */
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease-in-out;
+}
+
+select:focus {
+    border-color: #80bdff;
+    outline: none;
+}
+
+/* Buton */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+}
+
+/* Geri Dön linki */
+a {
+    display: inline-block;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
